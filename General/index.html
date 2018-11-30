@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <script src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+
+    <style>
+      .box {
+        width: 200px;
+        height: 200px;
+        padding: 10px;
+        background: gray;
+        margin-top: 10px;
+        margin-left: 10px;
+      }
+
+      .red {
+        background: red;
+      }
+
+      .green {
+        background: green;
+      }
+
+      .blue {
+        background: blue;
+      }
+
+      .circle {
+        border-radius: 100%;
+      }
+
+      #app4 {
+        padding: 10px;
+      }
+
+      .box-dinamic {
+        background-color: gray;
+        margin-right: 10px;
+      }
+    </style>
+
+    <title>Study library of VueJS</title>
+  </head>
+  <body>
+    <div class="d-flex justify-content-center">
+      <h4 class="text-success">Study library of VueJS</h4>
+    </div>
+    <div class="row p-4 ">
+      <div class="col-5 border border-dark mr-2">
+        <div id="app">
+          <h5>Usando bind atributes</h5>
+          <input v-on:input="changeName" />
+          <p>Meu nome é: {{ name }}</p>
+          <p>Mesagem: {{ returnText() }}</p>
+
+          <hr />
+          <h5>Usando bind de links</h5>
+          <a v-bind:href="docs">VueJS</a>
+          <hr />
+
+          <h5>Usando diretivas - sem interpolação</h5>
+          <p>Usando diretivas de Texto: <span v-text="name"></span></p>
+          <hr />
+
+          <h5>Usando model</h5>
+          <input v-model="text" />
+          <p>Texto escrito: {{ text }}</p>
+        </div>
+      </div>
+
+      <div class="col-5 border border-dark">
+        <div id="app2">
+          <h5>Desabilita renderizacoes</h5>
+          <p v-once>{{ name }}</p>
+          <p>{{ getNome() }}</p>
+
+          <hr />
+          <h5>Interpretar html puro</h5>
+          <p v-html="example"></p>
+          <hr />
+          <h5>Funções de clicks</h5>
+
+          <div class="row ml-1">
+            <button class="btn btn-info" v-on:click="increment">+</button>
+            <p class="ml-2 mr-2">Quantidades de clique: {{ clicks }}</p>
+            <button class="btn btn-info" v-on:click="decrement">-</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row p-4 ">
+      <div class="col-5 border border-dark mr-2">
+        <div id="app3">
+          <h5>Eventos</h5>
+          <h6>Mouse</h6>
+          <p v-on:mousemove="updateCordenates">
+            Coordenadas - X: {{ x }} e Y: {{ y }}
+          </p>
+          <div class="row ml-1 mb-2">
+            <!-- apos o click, existe mouse espeficas, EXEMPLO click.middle -->
+            <button v-on:click="onClick" class="btn btn-info">
+              Botão Mouse</button
+            >&nbsp; Mouse clicado - {{ mouseCapture }}
+          </div>
+
+          <div class="row ml-1 mb-2">
+            <button class="btn btn-info" @click="invertNames">
+              Alterar nomes</button
+            >&nbsp;<span> {{ fullName }} </span>
+          </div>
+
+          <hr />
+          <h6>Input</h6>
+          <div class="row ml-1 mb-2">
+            <span class="mr-2">Blur:</span>
+            <input v-on:blur="changeName('Texto escrito: ', $event)" />
+            <p class="ml-2">{{ nameBlur }}</p>
+          </div>
+
+          <div class="row ml-1 mb-2">
+            <!-- apos o keyup, existe teclas espeficas, EXEMPLO keyup.enter -->
+            <span class="mr-2">Captura tecla digitada</span>
+            <input v-on:keyup="onKey" /> &nbsp; Tecla - {{ keyCapture }}
+          </div>
+
+          <div class="row ml-1 mb-2">
+            <!-- apos o keyup, existe teclas espeficas, EXEMPLO keyup.enter -->
+            <span class="mr-2">Inverte String:</span>
+            <input @keyup.enter="invertTextEvent" />
+          </div>
+
+          <div class="row ml-1 mb-2">
+            <span
+              ><b>Não invertido:</b> {{ name }} | <b>Invertido:</b>
+              {{ invertText }}</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-5 border border-dark mr-2">
+        <div id="app4">
+          <h5>CSS Dinamico</h5>
+
+          <div style="display: flex">
+            <div>
+              <h6>Toggle</h6>
+              <div
+                class="box"
+                :class="{ 'red': applyClass }"
+                @click="applyClass = !applyClass"
+              ></div>
+            </div>
+
+            <div>
+              <h6>Classe CSS dinamica</h6>
+              <div class="box" :class="nameClass"></div>
+            </div>
+          </div>
+
+          <div style="display: flex">
+            <div>
+              <h6>Toggle com Objeto</h6>
+              <div
+                class="box"
+                :class="classCSS"
+                @click="applyClass = !applyClass"
+              ></div>
+            </div>
+
+            <div>
+              <h6>Classe CSS dinamica com Array</h6>
+              <div
+                class="box"
+                :class="['circle', nameClass, {green: applyClass}]"
+              ></div>
+            </div>
+          </div>
+          <div class="row ml-1 mb-2">
+            <input
+              style="margin-top: 10px;
+              margin-left: 10px;"
+              v-model="nameClass"
+              placeholder="Nome da Classe CSS"
+            />
+          </div>
+          <hr />
+
+          <div class="box-dinamic" :style="styleCSS"></div>
+
+          <div class="mt-2">
+            <input placeholder="Cor: Hexadecimal ou Normal" v-model="color" />
+            <input placeholder="Tamanho" v-model.number="size" />
+          </div>
+         
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      new Vue({
+        el: '#app',
+        data: {
+          name: '',
+          message: 'Love music',
+          docs: 'https://vuejs.org',
+          text: 'Ola mundo!'
+        },
+        methods: {
+          changeName: function(event) {
+            this.name = event.target.value;
+          },
+          returnText: function() {
+            return this.message;
+          }
+        }
+      });
+
+      new Vue({
+        el: '#app2',
+        data: {
+          name: 'Amauri Souza',
+          example:
+            '<span style= "color: purple; font-weight: bold;">Boostrap 4</span>',
+          clicks: 0
+        },
+        methods: {
+          getNome: function() {
+            this.name = 'Amauri';
+            return this.name;
+          },
+
+          increment: function() {
+            this.clicks++;
+          },
+          decrement: function() {
+            this.clicks--;
+          }
+        }
+      });
+
+      new Vue({
+        el: '#app3',
+        data: {
+          x: 0,
+          y: 0,
+          name: '',
+          keyCapture: 0,
+          mouseCapture: '',
+          nameBlur: '',
+          firtsName: 'Amauri',
+          lastName: 'Souza'
+        },
+        computed: {
+          invertText: function() {
+            return this.name
+              .split('')
+              .reverse('')
+              .join('');
+          },
+          fullName: function() {
+            return this.firtsName + ' ' + this.lastName;
+          }
+        },
+        methods: {
+          updateCordenates: function(event) {
+            this.x = event.clientX;
+            this.y = event.clientY;
+          },
+          changeName: function(text, event) {
+            this.nameBlur = text + event.target.value;
+          },
+          onKey: function(event) {
+            this.keyCapture = event.key;
+          },
+
+          onClick: function(event) {
+            switch (event.button) {
+              case 0:
+                this.mouseCapture = 'Esquerdo';
+                break;
+              case 1:
+                this.mouseCapture = 'Meio';
+                break;
+              case 2:
+                this.mouseCapture = 'Direito';
+                break;
+
+              default:
+                break;
+            }
+          },
+
+          invertTextEvent: function(event) {
+            this.name = event.target.value;
+          },
+
+          invertNames: function() {
+            this.firtsName = 'Souza';
+            this.lastName = 'Amauri';
+          }
+        }
+      });
+
+      new Vue({
+        el: '#app4',
+        data: {
+          applyClass: false,
+          nameClass: '',
+          color: '',
+          size: 200
+        },
+        computed: {
+          classCSS: function() {
+            return {
+              blue: this.applyClass,
+              circle: this.applyClass,
+              green: !this.applyClass
+            };
+          },
+
+          styleCSS: function() {
+            return {
+              backgroundColor: this.color,
+              height: this.size + 'px',
+              width: '200px'
+            };
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

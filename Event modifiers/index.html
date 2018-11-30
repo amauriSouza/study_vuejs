@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+    <title>Study library of VueJS</title>
+  </head>
+  <body>
+    <div id="app">
+      <p v-on:click="onClick('p', $event)">
+        VueJS
+        <button v-on:click.stop="onClick('button', $event)">Clique</button>
+      </p>
+
+      <form action="">
+        <input type="text" />
+        <button type="submit" v-on:click="onSubmit">
+          Enviar sem modificacao
+        </button>
+        <button type="submit" v-on:click.prevent="onSubmit">
+          Enviar com modificacao
+        </button>
+      </form>
+    </div>
+
+    <script type="text/javascript">
+      new Vue({
+        el: '#app',
+        methods: {
+          onClick: function(elementoAlvo, event) {
+            // event.stopPropagation();
+            console.log(event.type, ':', elementoAlvo);
+          },
+          onSubmit: function(event) {
+            console.log('Form send');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
