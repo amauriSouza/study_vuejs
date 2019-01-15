@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <script src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+
+    <style>
+      .box {
+        width: 200px;
+        height: 200px;
+        padding: 10px;
+        background: gray;
+        margin-top: 10px;
+        margin-left: 10px;
+      }
+
+      .red {
+        background: red;
+      }
+
+      .green {
+        background: green;
+      }
+
+      .blue {
+        background: blue;
+      }
+
+      .circle {
+        border-radius: 100%;
+      }
+
+      #app4 {
+        padding: 10px;
+      }
+
+      .box-dinamic {
+        background-color: gray;
+        margin-right: 10px;
+      }
+    </style>
+
+    <title>Study library of VueJS</title>
+  </head>
+  <body>
+    <div class="d-flex justify-content-center">
+      <h4 class="text-success">Study library of VueJS</h4>
+    </div>
+    <div class="row p-4 ">
+      <div class="col-5 border border-dark mr-2 p-2">
+        <div id="app">
+          <h5>Renderizacao condicional v-if e v-else</h5>
+          <p v-if="show">Ola vueJS!</p>
+
+          <p v-else>Ate logo vueJS!</p>
+
+          <button @click="show = !show">Alternar</button>
+
+          <p v-if="note === 'A'">Nota A</p>
+          <p v-else-if="note === 'B'">Nota B</p>
+          <p v-else-if="note === 'C'">Nota C</p>
+          <p v-else>Nota nao publicada</p>
+          <input v-model="note" placeholder="Nota" />
+
+          <hr />
+          <h5>Renderizando grupos de elementos condicionalmente</h5>
+
+          <ul>
+            <li>Item 0</li>
+            <li>Item 1</li>
+            <template v-if="showList">
+              <li>Item 2</li>
+              <li>Item 3</li>
+            </template>
+          </ul>
+          <hr />
+          <h5>Controlando reutilização de elementos com key</h5>
+
+          <button @click="login = !login">Escolha</button>
+          <template v-if="login">
+            <label>Entrar com Login</label>&nbsp;
+            <input placeholder="Login" key="input-login" />
+          </template>
+
+          <template v-else>
+            <label>Entrar com Email</label>&nbsp;
+            <!-- passando key para definir input unico -->
+            <input placeholder="Email" key="input-email" />
+          </template>
+          <hr />
+          <h5>Ocultando elementos com o v-show</h5>
+          <!-- diferenca do v-if para o v-show, e que o v-if remove o elemento do DOM
+            ja o v-show passa um CSS em line para display: none 
+           -->
+          <button @click="vShow = !vShow">Escolha</button>
+          <p>Diretiva v-show {{ vShow }}</p>
+          <p v-show="vShow">Texto</p>
+        </div>
+      </div>
+
+      <div class="col-5 border border-dark">
+        <div id="app2">
+          <h5>Renderizando listas(array) com v-for</h5>
+          <p>Lista de produtos</p>
+          <ul>
+            <!-- inves do of, pode usar o "IN" -->
+            <li v-for="(product, index) of products">
+              {{ tagName }} {{ index }}: {{ product }}
+            </li>
+          </ul>
+
+          <hr />
+          <h5>Renderizando listas(objeto) com v-for</h5>
+          <p>Lista de produtos (Todos)</p>
+          <ul>
+            <!-- inves do of, pode usar o "IN" -->
+            <li v-for="product of productsObject">{{ product }}</li>
+          </ul>
+          <hr />
+          <p>Lista de produtos (Cada item/chave)</p>
+          <ul>
+            <!-- inves do of, pode usar o "IN" -->
+            <li v-for="(product, key, index) of productsObject">
+              {{ index }} - {{ key }}: {{ product }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      new Vue({
+        el: "#app",
+        data: {
+          show: true,
+          note: "",
+          showList: true,
+          login: true,
+          vShow: true
+        }
+      });
+
+      new Vue({
+        el: "#app2",
+        data: {
+          tagName: "Product",
+          products: ["Monitor", "Mouse", "Teclado"],
+          productsObject: {
+            id: 1,
+            name: "Teclado",
+            brand: "Dell",
+            value: 59.9
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
